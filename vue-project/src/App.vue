@@ -1,149 +1,117 @@
 <template>
-  <div class="motherTag">
-    <div class="menu">
-      <RouterLink class="links" to="/">Home</RouterLink>
-      <RouterLink class="links" to="/Help">Help</RouterLink>
-      <RouterLink class="links" to="/Profile">Profile</RouterLink>
-      <img
-        class="imgLinks"
-        src="./img/wired-flat-139-basket-hover-pinch.svg"
-        alt="basket"
-        @click="menuIsOpen = !menuIsOpen "
-      />
-    </div>
-    <div class="basket" :class="{open : menuIsOpen}">
-      <span class="close" @click="menuIsOpen = !menuIsOpen">X</span>
-      <span class="empt">Empty</span>
-    </div>
-    <RouterView class="view" />
+  <div class="body">
+    <nav>
+      <div class="logo">Shop</div>
+      <div class="menu">
+        <RouterLink class="link" to="/">Home</RouterLink>
+        <RouterLink class="link" to="/shop">Shop</RouterLink>
+        <RouterLink class="link" to="/about">About</RouterLink>
+        <RouterLink class="link" to="/contact">Contact</RouterLink>
+      </div>
+      <div class="login">
+        <p>Login</p>
+        <div class="num">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            id="clock"
+          >
+            <path
+              fill="#FFFFFF"
+              d="M15.09814,12.63379,13,11.42285V7a1,1,0,0,0-2,0v5a.99985.99985,0,0,0,.5.86621l2.59814,1.5a1.00016,1.00016,0,1,0,1-1.73242ZM12,2A10,10,0,1,0,22,12,10.01114,10.01114,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.00917,8.00917,0,0,1,12,20Z"
+            ></path>
+          </svg>
+          <p>0</p>
+        </div>
+      </div>
+    </nav>
+    <RouterView class="view"></RouterView>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const menuIsOpen = ref(false);
-
 </script>
 
 <style scoped>
-@keyframes color {
-  
+@keyframes active {
+  0%{
+    color: #8E1616;
+  }
+  10%{
+    color: #F05941;
+  }
+  25%{
+    color: #8C3061;
+  }
+  30%{
+    color: #E19898;
+  }
+  50%{
+    color: #D84040;
+  }
+  75%{
+    color: #704264;
+  }
+  100%{
+    color: #AE445A;
+  }
 }
-.view {
-  position: relative;
-  top: -58px;
-  overflow: hidden;
+
+.body {
+  width: 100%;
+  height: 100vh;
+  background: #360a0b;
 }
-.menu {
-  z-index: 1;
-  background: #ffffff;
-  background: linear-gradient(
-    157deg,
-    rgba(61, 61, 61, 0.8) 0%,
-    rgba(171, 171, 171, 0.8) 60%,
-    rgba(255, 255, 255, 0.8) 100%
-  );
+nav {
+  width: 100%;
+  height: 75px;
+  background: #0c0907;
   display: flex;
-  justify-content: space-evenly;
-  width: 500px;
-  border-radius: 16px;
+  justify-content: space-between;
   align-items: center;
-  height: 58px;
-  position: sticky;
-  left: 40px;
-  top: 30px;
-  box-shadow: 5px 5px 10px;
-  border: 1px solid #757575;
+  padding-left: 70px;
+  padding-right: 70px;
 }
-.links {
+.logo {
+  color: snow;
+  font-size: 40px;
+  font-weight: 900;
+}
+.menu{
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+.link{
+  color: snow;
   text-decoration: none;
-  color: snow;
   font-size: 18px;
-  font-weight: 600;
-  transition: all 0.7s;
-  text-shadow: 3px 6px 4px black;
+  font-weight: 400;
+  transition: all 1s;
 }
-.imgLinks {
-  width: 38px;
-  height: auto;
-  cursor: pointer;
-  transition: all 1s ease-out;
-}
-.imgLinks:hover {
-  transform: rotate(360deg);
-}
-.links:hover,
-.router-link-active,
-.router-link-exact-active {
-  background: linear-gradient(to right, #191919, #ed473e, #fd746c);
-  color: transparent;
-  background-clip: text;
-}
-.basket {
-  z-index: 2;
-  height: 0vh;
-  width: 90%;
-  position:fixed;
-  top: 193px;
-  left: 5%;
-  text-align: center;
-  border-radius: 3px 3px 0px 0px;
-  background-color: #2a2a2a;
-  transition: all 0.7s ease-in-out;
-  overflow: hidden;
-  box-shadow: 10px 0px 15px;
-  opacity: 0;
-  filter: blur(30px);
-}
-.basket.open {
-  height: 70vh;
-  opacity: 1;
-  filter: none;
-  animation: color 1s linear 0.1s 1 ease-in-out;
-}
-.close {
+.login{
+  display: flex;
+  justify-content: space-between;
+  width: 90px;
   color: snow;
-  font-size: 20px;
-  font-weight: 900;
-  display: block;
-  padding-left: 20px;
-  padding-top: 10px;
-  float: left;
-  cursor: pointer;
 }
-.empt {
-  position: relative;
-  top: 30%;
-  background: #ffffff;
-  background: linear-gradient(
-    263deg,
-    rgba(255, 255, 255, 1) 20%,
-    rgba(161, 50, 50, 1) 60%,
-    rgba(181, 0, 0, 1) 80%
-  );
-  background-position: center;
-  color: transparent;
-  background-clip: text;
-  font-size: 80px;
-  font-weight: 900;
-  display: block;
+.num{
+  display: flex;
+  justify-content: space-between;
+  width: 35px;
 }
-@media screen and (max-width: 850px) {
-  .menu {
-    left: 10px;
-  }
+.num svg{
+  width: 20px;
 }
-@media screen and (max-width: 600px) {
-  .menu {
-    width: 100%;
-    border-radius: 0px;
-  }
-  .basket {
-    width: 96%;
-    left: 2%;
-    box-shadow: none;
-    border-radius: 10px 10px 0px 0px;
-  }
+.router-link-active,
+.router-link-exact-active{
+  font-size: 19px;
+  font-weight: 600;
+  animation: active 6s ease-out 0.3s infinite alternate ;
+}
+
+.view {
+  padding-left: 70px;
+  padding-right: 70px;
 }
 </style>
