@@ -91,7 +91,7 @@ function menuHandeler() {
 
 .body {
   width: 100%;
-  height: auto;
+  height: 110vh;
   background: #360a0b;
   overflow: hidden;
 }
@@ -194,8 +194,14 @@ nav {
     position: relative;
     left: 30%;
   }
+  .body{
+    height: 130vh;
+  }
 }
 @media screen and (max-width: 450px) {
+  .body{
+    height: 200vh;
+  }
   .login {
     position: relative;
     left: 10%;
@@ -205,8 +211,14 @@ nav {
     padding-right: 30px;
   }
   .view {
+    height: 100vh;
     padding-left: 30px;
     padding-right: 30px;
+  }
+}
+@media screen and (max-width: 320px){
+  .body{
+    height: 290vh;
   }
 }
 </style>
