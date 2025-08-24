@@ -56,10 +56,10 @@ const menuBar = ref(null);
 function menuHandeler() {
   if (toggel.value) {
     toggel.value = false;
-    menuBar.value.style.right = "-1500px"; // برگرده بیرون
+    menuBar.value.style.right = "-1500px";
   } else {
     toggel.value = true;
-    menuBar.value.style.right = "15px"; // بیاد داخل صفحه
+    menuBar.value.style.right = "15px";
   }
 }
 </script>
@@ -91,10 +91,19 @@ function menuHandeler() {
 
 .body {
   width: 100%;
-  height: 110vh;
+  min-height: 100vh;
   background: #360a0b;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
+.body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.body::-webkit-scrollbar {
+  display: none;
+}
+
 nav {
   width: 100%;
   height: 75px;
@@ -194,14 +203,8 @@ nav {
     position: relative;
     left: 30%;
   }
-  .body{
-    height: 130vh;
-  }
 }
 @media screen and (max-width: 450px) {
-  .body{
-    height: 200vh;
-  }
   .login {
     position: relative;
     left: 10%;
@@ -214,11 +217,6 @@ nav {
     height: 100vh;
     padding-left: 30px;
     padding-right: 30px;
-  }
-}
-@media screen and (max-width: 320px){
-  .body{
-    height: 290vh;
   }
 }
 </style>

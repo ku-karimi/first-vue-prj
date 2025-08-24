@@ -178,6 +178,7 @@ onUnmounted(() => {
   text-align: center;
   border-radius: 30px;
   cursor: pointer;
+  box-shadow: 7px 7px 10px black;
 }
 .imgCollection {
   width: 50%;
