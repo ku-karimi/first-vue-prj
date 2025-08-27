@@ -1,13 +1,11 @@
 <template>
-  <h1></h1>
+  <div class="body">
+    
+  </div>
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
 </script>
 
-<style>
-
+<style scoped>
 </style>
