@@ -12,6 +12,7 @@
         <RouterLink class="link" to="/login">Login</RouterLink>
         <div class="num">
           <svg
+            @click="openBasket"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             id="clock"
@@ -21,7 +22,7 @@
               d="M15.09814,12.63379,13,11.42285V7a1,1,0,0,0-2,0v5a.99985.99985,0,0,0,.5.86621l2.59814,1.5a1.00016,1.00016,0,1,0,1-1.73242ZM12,2A10,10,0,1,0,22,12,10.01114,10.01114,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.00917,8.00917,0,0,1,12,20Z"
             ></path>
           </svg>
-          <p>0</p>
+          <p>{{ cart.length }}</p>
         </div>
       </div>
       <svg
@@ -36,7 +37,9 @@
         ></path>
       </svg>
     </nav>
-    <RouterView class="view"></RouterView>
+
+    <RouterView class="view" :products="products" />
+
     <div class="barsMenu" ref="menuBar">
       <RouterLink class="linkMenu" to="/">Home</RouterLink>
       <RouterLink class="linkMenu" to="/shop">Shop</RouterLink>
@@ -44,11 +47,28 @@
       <RouterLink class="linkMenu" to="/contact">Contact</RouterLink>
       <RouterLink class="linkMenu" to="/login">Login</RouterLink>
     </div>
+
+    <div :class="['basket', { active: basketOpen }]">
+      <p class="empt" v-if="cart.length == 0">Empty</p>
+      <ul class="list" v-else>
+        <li v-for="p in cart" :key="p.name">
+          <img :src="p.src" alt="Img Prouduct" />
+          <div class="liText">
+            <p>{{ p.name }}</p>
+            <p>count: {{ p.num }}</p>
+            <p>Price: ${{ p.num * p.price }}</p>
+          </div>
+        </li>
+      </ul>
+      <div class="btnBasket">
+        <button class="btnPay">Pay</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref, computed } from "vue";
 
 const toggel = ref(false);
 const menuBar = ref(null);
@@ -62,6 +82,52 @@ function menuHandeler() {
     menuBar.value.style.right = "15px";
   }
 }
+
+const basketOpen = ref(false);
+const openBasket = () => {
+  basketOpen.value = !basketOpen.value;
+};
+
+const products = reactive([
+  {
+    src: "./src/img/Screenshot_2025-08-19_150339-removebg-preview.png",
+    name: "shoes red",
+    num: 0,
+    price: 9,
+  },
+  {
+    src: "./src/img/ChatGPT_Image_Aug_19__2025__03_26_02_PM-removebg-preview.png",
+    name: "shoes black",
+    num: 0,
+    price: 12,
+  },
+  {
+    src: "./src/img/ad2b153ff028f3e1e308bb613178c23994ed93f5_xxl-1-removebg-preview.png",
+    name: "T-shirt",
+    num: 0,
+    price: 0.7,
+  },
+  {
+    src: "./src/img/download-removebg-preview.png",
+    name: "Scarf",
+    num: 0,
+    price: 5,
+  },
+  {
+    src: "./src/img/ChatGPT_Image_Aug_19__2025__03_24_59_PM-removebg-preview.png",
+    name: "shoes wite",
+    num: 0,
+    price: 14,
+  },
+  {
+    src: "./src/img/ChatGPT_Image_Aug_19__2025__03_27_06_PM-removebg-preview (1).png",
+    name: "shoes new",
+    num: 0,
+    price: 22,
+  },
+]);
+
+const cart = computed(() => products.filter((p) => p.num > 0));
 </script>
 
 <style scoped>
@@ -100,7 +166,8 @@ function menuHandeler() {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.body::-webkit-scrollbar {
+.body::-webkit-scrollbar,
+.list::-webkit-scrollbar {
   display: none;
 }
 
@@ -146,6 +213,7 @@ nav {
 }
 .num svg {
   width: 20px;
+  cursor: pointer;
 }
 #bars {
   display: none;
@@ -189,6 +257,90 @@ nav {
   position: relative;
   top: 100px;
 }
+.basket {
+  position: fixed;
+  bottom: 0;
+  left: 2%;
+  width: 95%;
+  height: 0;
+  background: #0c0907;
+  transition: height 0.5s ease;
+  z-index: 10;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 8px 8px 13px #0c0907;
+}
+.basket.active {
+  overflow-y: scroll;
+  height: 70%;
+}
+.empt {
+  position: relative;
+  top: 20%;
+  text-shadow: 8px 9px 3px #360a0b;
+  color: #8e1616;
+  font-size: 70px;
+  text-align: center;
+  font-weight: 800;
+}
+.list {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 10px;
+  overflow-y: scroll;
+  max-height: 80%;
+}
+.list li {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  min-height: 250px;
+  border: 2px solid #8e1616;
+  padding: 8px;
+  color: snow;
+  font-size: 14px;
+  font-weight: 300;
+  box-sizing: border-box;
+}
+
+.list img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.liText {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+.liText p:last-child {
+  margin-top: auto;
+  font-weight: 600;
+  color: #f05941;
+}
+.btnBasket{
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.btnPay {
+  width: 100px;
+  background: #360a0b;
+  color: snow;
+  height: 40px;
+  margin: auto;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
 @media screen and (max-width: 850px) {
   #bars {
     display: inline;
@@ -217,6 +369,9 @@ nav {
     height: 100vh;
     padding-left: 30px;
     padding-right: 30px;
+  }
+  .list{
+    justify-content: space-evenly;
   }
 }
 </style>

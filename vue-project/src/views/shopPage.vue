@@ -1,22 +1,41 @@
 <template>
   <div class="body">
     <div class="serchDiv">
-      <input type="search"  v-model="search" placeholder="SEARCH" name="serch" id="serch" />
+      <input
+        type="search"
+        v-model="search"
+        placeholder="SEARCH"
+        name="serch"
+        id="serch"
+      />
     </div>
+
     <p class="text">Popular Products</p>
+
     <div class="collection">
-      <div class="product" v-for="(value, index) in filteredProducts" :key="index">
+      <div
+        class="product"
+        v-for="(value, index) in filteredProducts"
+        :key="index"
+      >
         <div class="imgProuduct">
           <img :src="value.src" alt="product" />
         </div>
+
         <div class="information">
-          <p class="name" v-text="value.name"></p>
-          <button class="btn" v-if="value.num == 0" @click="value.num++">
+          <p class="name">{{ value.name }}</p>
+
+          <button
+            class="btn"
+            v-if="value.num == 0"
+            @click="updateProduct(value, 1)"
+          >
             ${{ value.price }}
           </button>
+
           <button class="btn" v-else :class="{ activ: value.num > 0 }">
             <svg
-              @click="value.num--"
+              @click="updateProduct(value, -1)"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               id="minus-circle"
@@ -26,9 +45,9 @@
                 d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm4-9H8a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Z"
               ></path>
             </svg>
-            {{ value.num * value.price }}
+            ${{ value.num * value.price }}
             <svg
-              @click="value.num++"
+              @click="updateProduct(value, 1)"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               id="plus-circle"
@@ -46,65 +65,27 @@
 </template>
 
 <script setup>
-import { reactive,computed,ref } from "vue";
+import { ref, computed } from "vue";
 
-const products = reactive([
-  {
-    src: "./src/img/Screenshot_2025-08-19_150339-removebg-preview.png",
-    name: "shoes red",
-    num: 0,
-    price: 9,
+const props = defineProps({
+  products: {
+    type: Array,
+    required: true,
   },
-  {
-    src: "./src/img/ChatGPT_Image_Aug_19__2025__03_26_02_PM-removebg-preview.png",
-    name: "shoes black",
-    num: 0,
-    price: 12,
-  },
-  {
-    src: "./src/img/images__1_-removebg-preview.png",
-    name: "Dreess woman",
-    num: 0,
-    price: 3.5,
-  },
-  {
-    src: "./src/img/images-removebg-preview.png",
-    name: "Shirt man",
-    num: 0,
-    price: 4,
-  },
-  {
-    src: "./src/img/ad2b153ff028f3e1e308bb613178c23994ed93f5_xxl-1-removebg-preview.png",
-    name: "T-shirt",
-    num: 0,
-    price: 0.7,
-  },
-  {
-    src: "./src/img/download-removebg-preview.png",
-    name: "Scarf",
-    num: 0,
-    price: 5,
-  },
-  {
-    src: "./src/img/ChatGPT_Image_Aug_19__2025__03_24_59_PM-removebg-preview.png",
-    name: "shoes wite",
-    num: 0,
-    price: 14,
-  },
-  {
-    src: "./src/img/ChatGPT_Image_Aug_19__2025__03_27_06_PM-removebg-preview (1).png",
-    name: "shoes new",
-    num: 0,
-    price: 22,
-  },
-]);
+});
+
 const search = ref("");
 
 const filteredProducts = computed(() =>
-  products.filter((p) =>
+  props.products.filter((p) =>
     p.name.toLowerCase().includes(search.value.toLowerCase())
   )
 );
+
+function updateProduct(product, change) {
+  product.num += change;
+  if (product.num < 0) product.num = 0;
+}
 </script>
 
 <style scoped>
@@ -219,7 +200,7 @@ const filteredProducts = computed(() =>
   box-shadow: none;
 }
 .activ {
-  border: 2px solid #c32222;
+  border: 1px solid snow;
 }
 .btn svg {
   width: 20px;
@@ -232,16 +213,70 @@ const filteredProducts = computed(() =>
   .text {
     margin-left: 5%;
   }
+  .product {
+  width: 250px;
+  height: 300px;
+}
+.btn{
+  width: 100px;
+}
+.imgProuduct img{
+  max-height: 200px;
+  max-width: 200px;
+}
 }
 @media screen and (max-width: 600px) {
 .product {
+  width: 100%;
   width: 200px;
   height: 250px;
 }
 .imgProuduct img{
-  
   max-height: 150px;
-  max-width: 180px;
+  max-width: 200px;
+}
+}
+@media screen and (max-width: 450px) {
+.product {
+  width: 130px;
+  height: 180px;
+  font-size: 13px;
+}
+.imgProuduct img{
+  max-height: 90px;
+  max-width: 120px;
+  filter: drop-shadow(3px 4px 5px black);
+}
+.btn{
+  width: 80px;
+  font-size: 14px;
+}
+.btn svg{
+  width: 15px;
+}
+.collection{
+  gap: 2px;
+}
+}
+@media screen and (max-width: 351px) {
+.product {
+  width: 100px;
+  height: 150px;
+  font-size: 10px;
+}
+.imgProuduct img{
+  max-height: 60px;
+  max-width: 100px;
+}
+.btn{
+  width: 60px;
+  font-size: 12px;
+}
+.btn svg{
+  width: 10px;
+}
+#serch{
+  width: 90%;
 }
 }
 </style>
