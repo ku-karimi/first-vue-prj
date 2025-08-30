@@ -59,10 +59,10 @@
             <p>Price: ${{ p.num * p.price }}</p>
           </div>
         </li>
+        <div class="btnBasket">
+          <button class="btnPay">Pay</button>
+        </div>
       </ul>
-      <div class="btnBasket">
-        <button class="btnPay">Pay</button>
-      </div>
     </div>
   </div>
 </template>
@@ -270,7 +270,6 @@ nav {
   box-shadow: 8px 8px 13px #0c0907;
 }
 .basket.active {
-  overflow-y: scroll;
   height: 70%;
 }
 .empt {
@@ -292,23 +291,30 @@ nav {
   padding: 10px;
   overflow-y: scroll;
   max-height: 80%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .list li {
   display: flex;
   flex-direction: column;
   width: 200px;
-  min-height: 250px;
+  height: 300px;
   border: 2px solid #8e1616;
   padding: 8px;
   color: snow;
   font-size: 14px;
   font-weight: 300;
   box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .list img {
-  max-width: 100%;
-  height: auto;
+  position: relative;
+  top: 0px;
+  margin: auto;
+  max-width: 150px;
+  max-height: 200px;
   margin-bottom: 8px;
 }
 
@@ -317,6 +323,7 @@ nav {
   flex-direction: column;
   justify-content: flex-start;
   flex-grow: 1;
+  margin-top: auto;
 }
 
 .liText p:last-child {
@@ -324,7 +331,7 @@ nav {
   font-weight: 600;
   color: #f05941;
 }
-.btnBasket{
+.btnBasket {
   width: 100%;
   display: flex;
   margin-top: 10px;
@@ -370,7 +377,7 @@ nav {
     padding-left: 30px;
     padding-right: 30px;
   }
-  .list{
+  .list {
     justify-content: space-evenly;
   }
 }
