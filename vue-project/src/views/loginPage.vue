@@ -68,7 +68,78 @@ const users = reactive([
   { name: "mily", email: "mily@gmail.com", pass: "Ml345" },
 ]);
 
+const clearErrors = () => {
+  nameError.value = "";
+  emailError.value = "";
+  passError.value = "";
+};
 
+const acountHandeler = () => {
+  clearErrors();
+
+  // login
+  if (header.value === "Login") {
+    if (!email.value.checkValidity()) {
+      emailError.value = " Please enter a valid email.";
+      return;
+    }
+    if (!pass.value.checkValidity()) {
+      passError.value =
+        " Password must be 6-15 characters with A-Z, a-z, number & symbol.";
+      return;
+    }
+
+    const user = users.find((u) => u.email === emailValue.value);
+
+    if (!user) {
+      emailError.value = " No account found with this email.";
+      return;
+    }
+
+    if (user.pass !== passValue.value) {
+      passError.value = " Your password does not match.";
+      return;
+    }
+
+    acountPusitin.value = true;
+    alert(" Login successful!");
+  }
+
+  // sign up
+  if (header.value === "Sign up") {
+    if (!name.value.checkValidity()) {
+      nameError.value = " Name must be 2-15 characters.";
+      return;
+    }
+    if (!email.value.checkValidity()) {
+      emailError.value = " Please enter a valid email.";
+      return;
+    }
+    if (!pass.value.checkValidity()) {
+      passError.value =
+        " Password must be 6-15 characters with A-Z, a-z, number & symbol.";
+      return;
+    }
+
+    const userExists = users.some((u) => u.email === emailValue.value);
+    if (userExists) {
+      emailError.value = " Email already exists.";
+      return;
+    }
+
+    users.push({
+      name: nameValue.value,
+      email: emailValue.value,
+      pass: passValue.value,
+    });
+
+    alert(" Account created successfully!");
+    header.value = "Login";
+    nameValue.value = "";
+    emailValue.value = "";
+    passValue.value = "";
+  }
+};
 </script>
 
 <style scoped>
