@@ -42,7 +42,7 @@
       <RouterLink class="linkMenu" to="/shop">Shop</RouterLink>
       <RouterLink class="linkMenu" to="/about">About</RouterLink>
       <RouterLink class="linkMenu" to="/contact">Contact</RouterLink>
-      <RouterLink class="linkMenu" to="/ligin">Login</RouterLink>
+      <RouterLink class="linkMenu" to="/login">Login</RouterLink>
     </div>
   </div>
 </template>
